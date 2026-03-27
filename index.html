@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cabinet Mor Dieng – Audit · Expertise · Conseil · Dakar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --bleu:#0D2E6B;
+  --bleu-vif:#1A5CB8;
+  --bleu-ciel:#C8DAEA;
+  --bleu-pale:#E8F2FA;
+  --beige:#F4F1EC;
+  --beige-fonce:#BFC8D8;
+  --blanc:#FAFBFD;
+  --blanc-pur:#FFFFFF;
+  --gris:#5A7299;
+  --display:'Playfair Display',Georgia,serif;
+  --body:'DM Sans',sans-serif;
+}
+
+body{font-family:var(--body);background:var(--blanc);color:var(--bleu);overflow-x:hidden;cursor:none}
+
+/* ─── CURSOR ─── */
+#cur{position:fixed;width:10px;height:10px;background:var(--bleu-vif);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .15s;mix-blend-mode:multiply}
+#ring{position:fixed;width:36px;height:36px;border:1.5px solid var(--bleu-vif);border-radius:50%;pointer-events:none;z-index:9998;opacity:.5;transition:width .3s,height .3s,opacity .3s}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(250,251,253,.94);backdrop-filter:blur(20px);border-bottom:1px solid rgba(13,46,107,.07);transition:padding .3s}
+.nav-brand{display:flex;flex-direction:column}
+.nav-brand .mark{font-family:var(--display);font-size:18px;font-weight:700;color:var(--bleu)}
+.nav-brand .tag{font-size:9px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--gris);margin-top:2px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:11px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--gris);text-decoration:none;position:relative;transition:color .3s;cursor:none}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--bleu-vif);transition:width .35s ease}
+.nav-links a:hover,.nav-links a.active{color:var(--bleu)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;background:var(--bleu);color:var(--blanc-pur);padding:12px 24px;border-radius:6px;transition:background .3s,transform .2s;cursor:none}
+.nav-cta:hover{background:var(--bleu-vif);transform:translateY(-1px)}
+
+/* ─── PAGES ─── */
+.page{display:none;min-height:100vh;padding-top:72px}
+.page.active{display:block}
+
+/* ─── BOUTONS ─── */
+.btn-pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:var(--bleu);color:var(--blanc-pur);padding:15px 34px;border-radius:100px;border:1.5px solid var(--bleu);transition:all .4s ease;position:relative;overflow:hidden;cursor:none}
+.btn-pill::before{content:'';position:absolute;inset:0;background:var(--bleu-vif);transform:translateX(-100%);transition:transform .4s ease;border-radius:100px}
+.btn-pill span,.btn-pill .arr{position:relative;z-index:1}
+.btn-pill .arr{transition:transform .3s}
+.btn-pill:hover::before{transform:translateX(0)}
+.btn-pill:hover .arr{transform:translateX(4px)}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:transparent;color:var(--bleu);padding:15px 34px;border-radius:100px;border:1.5px solid var(--bleu);transition:all .4s ease;cursor:none}
+.btn-outline:hover{background:var(--bleu);color:var(--blanc-pur)}
+.btn-white{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:var(--blanc-pur);color:var(--bleu);padding:15px 34px;border-radius:100px;transition:all .4s ease;cursor:none}
+.btn-white:hover{background:var(--beige)}
+
+/* ─── SECTION HELPERS ─── */
+.s-tag{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu-vif);margin-bottom:18px}
+.s-tag::before{content:'';width:24px;height:1.5px;background:var(--bleu-vif);display:block}
+.s-h2{font-family:var(--display);font-size:clamp(34px,3.5vw,54px);font-weight:700;line-height:1.1;color:var(--bleu);margin-bottom:24px}
+.s-h2 em{font-style:italic;font-weight:400;color:var(--bleu-vif)}
+.s-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--gris)}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ════════════════════════════════════
+   PAGE ACCUEIL
+════════════════════════════════════ */
+/* HERO */
+#hero-section{min-height:calc(100vh - 72px);display:grid;grid-template-columns:55% 45%;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 60px;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu-vif);margin-bottom:32px}
+.hero-eyebrow .dot{width:6px;height:6px;background:var(--bleu-vif);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-h1{font-family:var(--display);font-size:clamp(50px,5.5vw,80px);font-weight:900;line-height:1.0;color:var(--bleu);margin-bottom:32px}
+.hero-h1 .it{font-style:italic;font-weight:400;color:var(--bleu-vif)}
+.hero-h1 .hollow{display:block;-webkit-text-stroke:1.5px var(--bleu);color:transparent}
+.hero-desc{font-size:15px;font-weight:300;line-height:1.85;color:var(--gris);max-width:440px;margin-bottom:48px}
+.hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hero-right{position:relative;overflow:hidden}
+.hrbg{position:absolute;inset:0;background:var(--bleu);clip-path:polygon(8% 0%,100% 0%,100% 100%,0% 100%)}
+.hrbg2{position:absolute;bottom:0;left:0;right:0;height:28%;background:var(--beige);clip-path:polygon(8% 0%,100% 0%,100% 100%,0% 100%)}
+.hr-inner{position:absolute;inset:0;clip-path:polygon(8% 0%,100% 0%,100% 100%,0% 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 40px 40px 60px;z-index:2}
+.emblem{width:210px;height:210px;border:1px solid rgba(255,255,255,.14);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:36px;flex-shrink:0}
+.emblem::before{content:'';position:absolute;inset:12px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
+.emblem .mono{font-family:var(--display);font-size:80px;font-weight:900;color:rgba(255,255,255,.06);position:absolute;line-height:1}
+.emblem .nb{position:relative;text-align:center}
+.emblem .nb .pn{font-family:var(--display);font-size:24px;font-weight:400;color:var(--blanc-pur);display:block}
+.emblem .nb .nm{font-family:var(--display);font-size:24px;font-weight:700;color:var(--blanc-pur);display:block}
+.emblem .nb .sp{width:28px;height:1px;background:rgba(255,255,255,.3);margin:8px auto}
+.emblem .nb .tt{font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.hero-badges{display:flex;flex-direction:column;gap:10px;width:100%}
+.hbi{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:12px 16px}
+.hbi-ico{width:36px;height:36px;background:rgba(255,255,255,.09);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.hbi-t{font-size:11px;font-weight:500;color:var(--blanc-pur);letter-spacing:.04em}
+.hbi-s{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px}
+.scroll-ind{position:absolute;bottom:36px;left:60px;display:flex;align-items:center;gap:12px;font-size:10px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--gris);z-index:3}
+.sc-line{width:48px;height:1px;background:var(--beige-fonce);position:relative;overflow:hidden}
+.sc-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--bleu-vif);animation:scan 2s infinite}
+@keyframes scan{0%{left:-100%}100%{left:100%}}
+
+/* STATS */
+.stats-band{background:var(--bleu);padding:44px 60px;display:grid;grid-template-columns:repeat(4,1fr)}
+.sb{padding:20px 24px;border-right:1px solid rgba(255,255,255,.07);transition:background .3s}
+.sb:last-child{border-right:none}
+.sb:hover{background:rgba(255,255,255,.04)}
+.sb .sn{font-family:var(--display);font-size:38px;font-weight:700;color:var(--blanc-pur);display:block;margin-bottom:6px}
+.sb .sl{font-size:10px;font-weight:300;letter-spacing:.15em;color:rgba(255,255,255,.4);text-transform:uppercase}
+
+/* SERVICES PREVIEW */
+.svc-preview{padding:100px 60px;background:var(--blanc)}
+.svc-preview-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:60px}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.svc-card{background:var(--blanc-pur);border:1px solid rgba(13,46,107,.07);border-radius:14px;padding:28px 22px;transition:all .45s ease;cursor:none;position:relative;overflow:hidden}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bleu),var(--bleu-vif));transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.svc-card:hover{background:var(--bleu);border-color:var(--bleu);transform:translateY(-6px);box-shadow:0 24px 60px rgba(13,46,107,.18)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-card:hover .sc-ico{background:rgba(255,255,255,.1)}
+.svc-card:hover .sc-num{color:rgba(255,255,255,.3)}
+.svc-card:hover .sc-name{color:var(--blanc-pur)}
+.svc-card:hover .sc-txt{color:rgba(255,255,255,.52)}
+.svc-card:hover .sc-link{color:rgba(255,255,255,.6)}
+.sc-ico{width:42px;height:42px;background:var(--bleu-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:16px;transition:background .45s}
+.sc-num{font-size:10px;font-weight:500;letter-spacing:.25em;color:var(--bleu-vif);margin-bottom:8px;display:block;transition:color .45s}
+.sc-name{font-family:var(--display);font-size:16px;font-weight:700;color:var(--bleu);margin-bottom:8px;line-height:1.3;transition:color .45s}
+.sc-txt{font-size:12px;font-weight:300;color:var(--gris);line-height:1.7;margin-bottom:14px;transition:color .45s}
+.sc-link{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--bleu-vif);text-decoration:none;transition:color .45s;cursor:none}
+
+/* VALEURS HOME */
+.valeurs{background:var(--beige);padding:100px 60px}
+.valeurs-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:60px}
+.valeur-item{display:flex;gap:24px;align-items:flex-start;padding:28px 0;border-bottom:1px solid var(--beige-fonce)}
+.valeur-item:first-child{border-top:1px solid var(--beige-fonce)}
+.v-num{font-family:var(--display);font-size:40px;font-weight:900;color:var(--bleu-ciel);flex-shrink:0;line-height:1}
+.v-body{}
+.v-title{font-family:var(--display);font-size:20px;font-weight:600;color:var(--bleu);margin-bottom:8px}
+.v-text{font-size:13px;font-weight:300;color:var(--gris);line-height:1.75}
+.valeurs-right{position:relative}
+.val-big{font-family:var(--display);font-size:clamp(40px,4vw,60px);font-weight:700;line-height:1.15;color:var(--bleu);margin-bottom:28px}
+.val-big em{font-style:italic;font-weight:400;color:var(--bleu-vif)}
+.val-desc{font-size:15px;font-weight:300;line-height:1.9;color:var(--gris);margin-bottom:32px}
+
+/* CTA BAND */
+.cta-band{background:var(--bleu);padding:80px 60px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center}
+.cta-band-title{font-family:var(--display);font-size:clamp(28px,3vw,44px);font-weight:700;color:var(--blanc-pur);line-height:1.2}
+.cta-band-title em{font-style:italic;font-weight:400;color:var(--bleu-ciel)}
+.cta-band-sub{font-size:14px;font-weight:300;color:rgba(255,255,255,.55);margin-top:12px}
+
+/* ════════════════════════════════════
+   PAGE À PROPOS
+════════════════════════════════════ */
+.about-hero{background:var(--bleu);padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
+.about-hero::before{content:'CMD';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--display);font-size:300px;font-weight:900;color:rgba(255,255,255,.03);pointer-events:none;user-select:none;line-height:1}
+.about-hero .s-h2{color:var(--blanc-pur)}
+.about-hero .s-tag{color:rgba(255,255,255,.45)}
+.about-hero .s-tag::before{background:rgba(255,255,255,.25)}
+.about-hero-text{font-size:16px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.65);margin-bottom:20px}
+.about-hero-right{position:relative}
+.portrait-frame{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.pf-mono{font-family:var(--display);font-size:120px;font-weight:900;color:rgba(255,255,255,.07);line-height:1}
+.pf-name{font-family:var(--display);font-size:32px;font-weight:400;color:var(--blanc-pur);text-align:center}
+.pf-div{width:40px;height:1px;background:rgba(255,255,255,.3)}
+.pf-role{font-size:10px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45);text-align:center;padding:0 30px}
+.pf-badge{position:absolute;bottom:-20px;right:-20px;background:var(--blanc-pur);padding:20px 26px;border-radius:6px;box-shadow:0 20px 60px rgba(13,46,107,.2)}
+.pf-badge .pb-n{font-family:var(--display);font-size:26px;font-weight:700;color:var(--bleu);display:block}
+.pf-badge .pb-l{font-size:10px;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--gris);margin-top:3px}
+
+.about-story{padding:100px 60px;background:var(--blanc);display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.story-label{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu-vif);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.story-label::before{content:'';width:24px;height:1.5px;background:var(--bleu-vif);display:block}
+.story-h{font-family:var(--display);font-size:clamp(28px,2.8vw,42px);font-weight:700;color:var(--bleu);line-height:1.15;margin-bottom:28px}
+.story-h em{font-style:italic;font-weight:400;color:var(--bleu-vif)}
+.story-p{font-size:15px;font-weight:300;line-height:1.9;color:var(--gris);margin-bottom:20px}
+.story-quote{border-left:3px solid var(--bleu-vif);padding:20px 24px;background:var(--bleu-pale);border-radius:0 8px 8px 0;margin:32px 0;font-family:var(--display);font-size:18px;font-style:italic;font-weight:400;color:var(--bleu);line-height:1.6}
+
+.creds-section{display:flex;flex-direction:column;gap:0}
+.cred-card{padding:28px 0;border-bottom:1px solid var(--beige-fonce);display:flex;gap:22px;align-items:flex-start}
+.cred-card:first-child{border-top:1px solid var(--beige-fonce)}
+.cred-num{font-family:var(--display);font-size:14px;font-weight:700;color:var(--bleu-ciel);flex-shrink:0;padding-top:2px;min-width:28px}
+.cred-title{font-size:15px;font-weight:600;color:var(--bleu);margin-bottom:6px}
+.cred-sub{font-size:13px;font-weight:300;color:var(--gris);line-height:1.7}
+
+.about-values{background:var(--beige);padding:100px 60px}
+.av-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.av-card{background:var(--blanc-pur);border-radius:14px;padding:36px 28px;border:1px solid rgba(13,46,107,.06);transition:all .4s ease}
+.av-card:hover{background:var(--bleu);transform:translateY(-4px);box-shadow:0 20px 50px rgba(13,46,107,.16)}
+.av-card:hover .av-ico{background:rgba(255,255,255,.1)}
+.av-card:hover .av-n{color:var(--blanc-pur)}
+.av-card:hover .av-t{color:rgba(255,255,255,.55)}
+.av-ico{width:48px;height:48px;background:var(--bleu-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px;transition:background .4s}
+.av-n{font-family:var(--display);font-size:20px;font-weight:600;color:var(--bleu);margin-bottom:10px;transition:color .4s}
+.av-t{font-size:13px;font-weight:300;color:var(--gris);line-height:1.75;transition:color .4s}
+
+.about-chiffres{background:var(--bleu);padding:80px 60px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.chiffre-item{padding:40px 32px;border-right:1px solid rgba(255,255,255,.07);text-align:center}
+.chiffre-item:last-child{border-right:none}
+.ch-n{font-family:var(--display);font-size:52px;font-weight:900;color:var(--blanc-pur);line-height:1;display:block;margin-bottom:8px}
+.ch-l{font-size:11px;font-weight:300;letter-spacing:.15em;color:rgba(255,255,255,.42);text-transform:uppercase}
+
+/* ════════════════════════════════════
+   PAGE SERVICES
+════════════════════════════════════ */
+.services-hero{background:var(--bleu);padding:80px 60px;position:relative;overflow:hidden}
+.services-hero::before{content:'SERVICES';position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-family:var(--display);font-size:180px;font-weight:900;color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;user-select:none}
+.services-hero .s-h2{color:var(--blanc-pur);max-width:640px}
+.services-hero .s-tag{color:rgba(255,255,255,.45)}
+.services-hero .s-tag::before{background:rgba(255,255,255,.25)}
+.services-hero-sub{font-size:16px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.6);max-width:600px;margin-top:12px}
+
+/* Layout sidebar + contenu */
+.svc-layout{display:grid;grid-template-columns:300px 1fr;min-height:80vh;background:var(--blanc)}
+.svc-sidebar{background:var(--bleu);position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;display:flex;flex-direction:column}
+.svc-sidebar-title{font-size:9px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:28px 28px 12px}
+.svc-nav-btn{display:flex;align-items:center;gap:14px;padding:16px 28px;border:none;background:transparent;cursor:none;text-align:left;width:100%;border-bottom:1px solid rgba(255,255,255,.05);transition:background .25s;position:relative}
+.svc-nav-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bleu-ciel);transform:scaleY(0);transition:transform .3s ease}
+.svc-nav-btn:hover{background:rgba(255,255,255,.05)}
+.svc-nav-btn:hover::before{transform:scaleY(1)}
+.svc-nav-btn.active{background:rgba(255,255,255,.09)}
+.svc-nav-btn.active::before{transform:scaleY(1)}
+.snb-ico{width:34px;height:34px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:background .3s}
+.svc-nav-btn.active .snb-ico{background:rgba(255,255,255,.16)}
+.snb-text{}
+.snb-num{font-size:9px;font-weight:500;letter-spacing:.22em;color:rgba(255,255,255,.3);display:block;margin-bottom:2px}
+.snb-name{font-size:12px;font-weight:500;color:rgba(255,255,255,.65);line-height:1.3;transition:color .3s}
+.svc-nav-btn.active .snb-name,.svc-nav-btn:hover .snb-name{color:var(--blanc-pur)}
+
+/* Panneau de contenu */
+.svc-content{overflow-y:auto;height:calc(100vh - 72px);position:sticky;top:72px}
+.svc-panel{display:none;padding:64px 72px;animation:fadeSlide .4s ease}
+.svc-panel.active{display:block}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.sp-top{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:36px}
+.sp-num{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu-vif);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sp-num::before{content:'';width:20px;height:1.5px;background:var(--bleu-vif);display:block}
+.sp-h{font-family:var(--display);font-size:clamp(28px,3vw,42px);font-weight:700;color:var(--bleu);line-height:1.1;margin-bottom:0}
+.sp-h em{font-style:italic;font-weight:400;color:var(--bleu-vif)}
+.sp-ico-big{width:80px;height:80px;background:var(--bleu-pale);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+
+.sp-hook{background:var(--bleu-pale);border-left:3px solid var(--bleu-vif);border-radius:0 10px 10px 0;padding:18px 22px;font-size:15px;font-weight:400;line-height:1.75;color:var(--bleu);margin-bottom:28px}
+
+.sp-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--gris);margin-bottom:28px}
+
+.sp-subtitle{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bleu);margin-bottom:16px}
+
+.sp-ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin-bottom:36px}
+.sp-ul li{display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:300;color:var(--gris);line-height:1.6}
+.sp-ul li::before{content:'';width:5px;height:5px;background:var(--bleu-vif);border-radius:50%;flex-shrink:0;margin-top:7px}
+
+.sp-why{background:var(--bleu);border-radius:14px;padding:28px 32px;margin-bottom:32px}
+.sp-why-title{font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px}
+.sp-why-text{font-size:14px;font-weight:300;line-height:1.8;color:rgba(255,255,255,.7)}
+
+.sp-cta{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:var(--bleu);color:var(--blanc-pur);padding:15px 32px;border-radius:100px;transition:background .3s;cursor:none}
+.sp-cta:hover{background:var(--bleu-vif)}
+.sp-cta .arr{transition:transform .3s}
+.sp-cta:hover .arr{transform:translateX(4px)}
+
+/* ════════════════════════════════════
+   PAGE EXPERTISE
+════════════════════════════════════ */
+.exp-hero{background:var(--bleu);padding:80px 60px;position:relative;overflow:hidden}
+.exp-hero::before{content:'OHADA';position:absolute;right:-30px;bottom:-20px;font-family:var(--display);font-size:200px;font-weight:900;color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;user-select:none}
+.exp-hero .s-h2{color:var(--blanc-pur);max-width:640px}
+.exp-hero .s-tag{color:rgba(255,255,255,.45)}
+.exp-hero .s-tag::before{background:rgba(255,255,255,.25)}
+.exp-hero-sub{font-size:16px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.6);max-width:600px;margin-top:12px}
+
+.exp-cadres{padding:100px 60px;background:var(--blanc)}
+.exp-cadres-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:56px}
+.exp-cadre-card{border:1px solid rgba(13,46,107,.08);border-radius:16px;overflow:hidden;transition:box-shadow .4s}
+.exp-cadre-card:hover{box-shadow:0 20px 60px rgba(13,46,107,.12)}
+.ec-header{background:var(--bleu);padding:32px 36px;display:flex;align-items:center;gap:20px}
+.ec-tag-pill{font-size:9px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.45);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:4px 14px}
+.ec-h{font-family:var(--display);font-size:28px;font-weight:700;color:var(--blanc-pur)}
+.ec-body{padding:32px 36px;background:var(--blanc-pur)}
+.ec-desc{font-size:14px;font-weight:300;line-height:1.85;color:var(--gris);margin-bottom:20px}
+.ec-points{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ec-points li{display:flex;gap:12px;align-items:flex-start;font-size:13px;font-weight:300;color:var(--gris);line-height:1.6}
+.ec-points li::before{content:'';width:5px;height:5px;background:var(--bleu-vif);border-radius:50%;flex-shrink:0;margin-top:7px}
+
+.exp-domaines{background:var(--beige);padding:100px 60px}
+.exp-dom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.exp-dom-card{background:var(--blanc-pur);border-radius:14px;padding:32px 26px;border:1px solid rgba(13,46,107,.06);transition:all .4s ease}
+.exp-dom-card:hover{background:var(--bleu);transform:translateY(-4px);box-shadow:0 20px 50px rgba(13,46,107,.16)}
+.exp-dom-card:hover .ed-ico{background:rgba(255,255,255,.1)}
+.exp-dom-card:hover .ed-n{color:var(--blanc-pur)}
+.exp-dom-card:hover .ed-t{color:rgba(255,255,255,.52)}
+.ed-ico{width:44px;height:44px;background:var(--bleu-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;transition:background .4s}
+.ed-n{font-family:var(--display);font-size:18px;font-weight:600;color:var(--bleu);margin-bottom:8px;transition:color .4s}
+.ed-t{font-size:12px;font-weight:300;color:var(--gris);line-height:1.7;transition:color .4s}
+
+.exp-why{background:var(--bleu);padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.exp-why .s-h2{color:var(--blanc-pur)}
+.exp-why .s-tag{color:rgba(255,255,255,.45)}
+.exp-why .s-tag::before{background:rgba(255,255,255,.25)}
+.exp-why-text{font-size:15px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.6);margin-bottom:20px}
+.why-list{display:flex;flex-direction:column;gap:18px}
+.why-item{display:flex;gap:18px;align-items:flex-start;padding:20px 24px;background:rgba(255,255,255,.05);border-radius:12px;border:1px solid rgba(255,255,255,.07)}
+.wi-ico{font-size:22px;flex-shrink:0}
+.wi-n{font-size:14px;font-weight:500;color:var(--blanc-pur);margin-bottom:4px}
+.wi-t{font-size:12px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6}
+
+/* ════════════════════════════════════
+   PAGE CLIENTS
+════════════════════════════════════ */
+.clients-hero{background:var(--beige);padding:80px 60px}
+.clients-hero .s-h2{max-width:620px}
+.clients-hero-sub{font-size:16px;font-weight:300;line-height:1.85;color:var(--gris);max-width:600px;margin-top:12px}
+
+.clients-qui{background:var(--blanc);padding:100px 60px}
+.clients-grid-big{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:56px}
+.cg-card{display:grid;grid-template-columns:auto 1fr;gap:24px;padding:32px 28px;background:var(--blanc-pur);border:1px solid rgba(13,46,107,.07);border-radius:14px;transition:all .4s ease;align-items:start}
+.cg-card:hover{background:var(--bleu);transform:translateY(-4px);box-shadow:0 20px 50px rgba(13,46,107,.16)}
+.cg-card:hover .cg-ico{background:rgba(255,255,255,.1)}
+.cg-card:hover .cg-n{color:var(--blanc-pur)}
+.cg-card:hover .cg-t{color:rgba(255,255,255,.52)}
+.cg-ico{width:52px;height:52px;background:var(--bleu-pale);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;transition:background .4s}
+.cg-n{font-family:var(--display);font-size:18px;font-weight:600;color:var(--bleu);margin-bottom:8px;transition:color .4s}
+.cg-t{font-size:13px;font-weight:300;color:var(--gris);line-height:1.7;transition:color .4s}
+
+.clients-temoignage{background:var(--bleu);padding:80px 60px;text-align:center;position:relative;overflow:hidden}
+.clients-temoignage::before{content:'"';position:absolute;top:-40px;left:60px;font-family:var(--display);font-size:300px;font-weight:900;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
+.ct-quote{font-family:var(--display);font-size:clamp(20px,2.5vw,32px);font-style:italic;font-weight:400;color:var(--blanc-pur);max-width:760px;margin:0 auto 28px;line-height:1.5;position:relative;z-index:1}
+.ct-author{font-size:12px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);position:relative;z-index:1}
+
+.clients-engagement{background:var(--beige);padding:100px 60px}
+.ce-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.ce-card{background:var(--blanc-pur);border-radius:14px;padding:36px 28px;border-left:3px solid var(--bleu-vif)}
+.ce-num{font-family:var(--display);font-size:36px;font-weight:900;color:var(--bleu-ciel);margin-bottom:12px}
+.ce-n{font-family:var(--display);font-size:18px;font-weight:600;color:var(--bleu);margin-bottom:10px}
+.ce-t{font-size:13px;font-weight:300;color:var(--gris);line-height:1.75}
+
+/* ════════════════════════════════════
+   PAGE CONTACT
+════════════════════════════════════ */
+.contact-hero{background:var(--bleu);padding:80px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative;overflow:hidden}
+.contact-hero::before{content:'CONTACT';position:absolute;right:-20px;bottom:-30px;font-family:var(--display);font-size:160px;font-weight:900;color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none;user-select:none}
+.contact-hero .s-h2{color:var(--blanc-pur)}
+.contact-hero .s-tag{color:rgba(255,255,255,.45)}
+.contact-hero .s-tag::before{background:rgba(255,255,255,.25)}
+.contact-hero-sub{font-size:15px;font-weight:300;line-height:1.9;color:rgba(255,255,255,.6);margin-bottom:36px}
+
+.contact-infos{display:flex;flex-direction:column;gap:20px}
+.ci-row{display:flex;gap:18px;align-items:flex-start}
+.ci-ico{width:40px;height:40px;background:rgba(255,255,255,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ci-lbl{font-size:9px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:3px}
+.ci-val{font-size:14px;font-weight:300;color:rgba(255,255,255,.75);line-height:1.6}
+
+.contact-form-wrap{background:var(--blanc-pur);border-radius:16px;padding:44px 38px;position:relative;z-index:2}
+.cf-title{font-family:var(--display);font-size:24px;font-weight:700;color:var(--bleu);margin-bottom:28px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.cf-group{margin-bottom:14px}
+.cf-label{display:block;font-size:9px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gris);margin-bottom:7px}
+.cf-input,.cf-select,.cf-textarea{width:100%;background:var(--beige);border:1px solid transparent;border-radius:8px;color:var(--bleu);font-family:var(--body);font-size:14px;font-weight:300;padding:13px 16px;outline:none;transition:border-color .3s,background .3s}
+.cf-input:focus,.cf-select:focus,.cf-textarea:focus{border-color:var(--bleu-vif);background:var(--blanc-pur)}
+.cf-input::placeholder,.cf-textarea::placeholder{color:var(--beige-fonce)}
+.cf-select{color:var(--gris);-webkit-appearance:none;cursor:none}
+.cf-textarea{height:110px;resize:none}
+.btn-send-full{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--bleu);color:var(--blanc-pur);font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:18px;border-radius:100px;border:none;cursor:none;margin-top:8px;transition:all .35s ease}
+.btn-send-full:hover{background:var(--bleu-vif);transform:scale(1.02)}
+.send-arr{transition:transform .3s;font-size:15px}
+.btn-send-full:hover .send-arr{transform:translateX(4px)}
+
+.contact-map{background:var(--beige);padding:80px 60px}
+.map-placeholder{background:var(--blanc-pur);border-radius:16px;height:280px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(13,46,107,.07);margin-top:40px;flex-direction:column;gap:12px}
+.map-placeholder .mp-ico{font-size:36px}
+.map-placeholder .mp-t{font-family:var(--display);font-size:20px;font-weight:600;color:var(--bleu)}
+.map-placeholder .mp-s{font-size:13px;font-weight:300;color:var(--gris)}
+
+.contact-faq{background:var(--blanc);padding:100px 60px}
+.faq-list{margin-top:48px;display:flex;flex-direction:column;gap:0}
+.faq-item{border-bottom:1px solid rgba(13,46,107,.07)}
+.faq-item:first-child{border-top:1px solid rgba(13,46,107,.07)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:22px 0;background:none;border:none;cursor:none;text-align:left;font-family:var(--display);font-size:18px;font-weight:600;color:var(--bleu)}
+.faq-q .faq-ico{font-size:20px;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-ico{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 0 22px;font-size:14px;font-weight:300;color:var(--gris);line-height:1.85;max-width:680px}
+.faq-item.open .faq-a{display:block}
+
+/* ─── FOOTER ─── */
+footer{background:var(--bleu);padding:60px 60px 36px}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px;margin-bottom:48px}
+.ft-brand .fn{font-family:var(--display);font-size:22px;font-weight:700;color:var(--blanc-pur);margin-bottom:8px}
+.ft-brand .fs{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.7}
+.ft-nav h5,.ft-contact h5{font-size:10px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:18px}
+.ft-nav ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ft-nav a{font-size:13px;font-weight:300;color:rgba(255,255,255,.6);text-decoration:none;transition:color .3s;cursor:none}
+.ft-nav a:hover{color:var(--blanc-pur)}
+.ft-contact p{font-size:13px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.8}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.fb-copy{font-size:11px;color:rgba(255,255,255,.28);letter-spacing:.06em}
+.fb-links{display:flex;gap:24px}
+.fb-links a{font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;transition:color .3s;cursor:none}
+.fb-links a:hover{color:var(--blanc-pur)}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="ring"></div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <div class="nav-brand">
+    <span class="mark">Cabinet Mor Dieng</span>
+    <span class="tag">Audit · Expertise · Conseil</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" class="active" data-page="home">Accueil</a></li>
+    <li><a href="#" data-page="about">À propos</a></li>
+    <li><a href="#" data-page="services">Services</a></li>
+    <li><a href="#" data-page="expertise">Expertise</a></li>
+    <li><a href="#" data-page="clients">Clients</a></li>
+    <li><a href="#" data-page="contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" data-page="contact">Prendre contact →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     PAGE : ACCUEIL
+═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div id="hero-section">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="dot"></span>Cabinet d'expertise sénégalais · Espace OHADA</div>
+      <h1 class="hero-h1">
+        Excellence<br>
+        <span class="it">financière</span><br>
+        <span class="hollow">&amp; stratégique</span>
+      </h1>
+      <p class="hero-desc">Partenaire de confiance en audit, fiscalité et conseil juridique depuis Dakar. Nous accompagnons les entreprises, les institutions et les investisseurs qui exigent rigueur, indépendance et vision dans l'espace OHADA.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-pill" data-page="services"><span>Nos services</span><span class="arr">→</span></a>
+        <a href="#" class="btn-outline" data-page="about">À propos</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hrbg"></div>
+      <div class="hrbg2"></div>
+      <div class="hr-inner">
+        <div class="emblem">
+          <span class="mono">MD</span>
+          <div class="nb"><span class="pn">Mor</span><span class="nm">Dieng</span><div class="sp"></div><span class="tt">Expert-Comptable Agréé</span></div>
+        </div>
+        <div class="hero-badges">
+          <div class="hbi"><div class="hbi-ico">🏛</div><div><div class="hbi-t">Président ONECCA Sénégal</div><div class="hbi-s">Ordre National — depuis juin 2022</div></div></div>
+          <div class="hbi"><div class="hbi-ico">🌍</div><div><div class="hbi-t">Président ABWA 2024</div><div class="hbi-s">Accountancy Bodies in West Africa</div></div></div>
+          <div class="hbi"><div class="hbi-ico">⚖️</div><div><div class="hbi-t">Maîtrise OHADA · UEMOA · CEDEAO</div><div class="hbi-s">Référentiels juridiques &amp; fiscaux</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-ind"><div class="sc-line"></div>Découvrir</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="sb reveal"><span class="sn">OHADA</span><span class="sl">Référentiel maîtrisé</span></div>
+    <div class="sb reveal d1"><span class="sn">×2</span><span class="sl">Président ONECCA</span></div>
+    <div class="sb reveal d2"><span class="sn">2024</span><span class="sl">Président ABWA</span></div>
+    <div class="sb reveal d3"><span class="sn">8</span><span class="sl">Domaines d'expertise</span></div>
+  </div>
+
+  <!-- SERVICES PREVIEW -->
+  <div class="svc-preview">
+    <div class="svc-preview-top">
+      <div class="reveal">
+        <span class="s-tag">Nos expertises</span>
+        <h2 class="s-h2">Ce que nous faisons,<br>et <em>pourquoi ça change tout</em></h2>
+      </div>
+      <p class="s-body reveal d2">Chaque mission est une responsabilité. Nous intervenons avec la rigueur d'un cabinet de référence et la proximité d'un partenaire de confiance — pour que vos décisions reposent toujours sur des bases solides.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal"><div class="sc-ico">📊</div><span class="sc-num">01</span><p class="sc-name">Audit & Commissariat</p><p class="sc-txt">La vérité chiffrée, certifiée sans compromis. Nous garantissons la fiabilité de vos états financiers.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d1"><div class="sc-ico">📒</div><span class="sc-num">02</span><p class="sc-name">Expertise comptable</p><p class="sc-txt">Vos comptes, toujours justes et conformes. Le socle de toutes vos décisions stratégiques.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d2"><div class="sc-ico">⚖️</div><span class="sc-num">03</span><p class="sc-name">Conseil juridique & fiscal</p><p class="sc-txt">Payez ce que vous devez. Pas un franc de plus. Nous optimisons votre charge fiscale légalement.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d3"><div class="sc-ico">🏛</div><span class="sc-num">04</span><p class="sc-name">Expertise judiciaire</p><p class="sc-txt">Quand les chiffres deviennent des preuves. Analyse impartiale pour les juridictions.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal"><div class="sc-ico">🎯</div><span class="sc-num">05</span><p class="sc-name">Stratégie & gouvernance</p><p class="sc-txt">Piloter avec lucidité, décider avec autorité. Nous renforçons vos structures de gouvernance.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d1"><div class="sc-ico">🔀</div><span class="sc-num">06</span><p class="sc-name">Fusions & acquisitions</p><p class="sc-txt">Croître sans mauvaises surprises. Due diligence, évaluation et structuration des transactions.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d2"><div class="sc-ico">⛏️</div><span class="sc-num">07</span><p class="sc-name">Comptabilité pétrolière</p><p class="sc-txt">Un secteur d'exception, une expertise à la hauteur. CPP, IFRS 6, fiscalité extractive.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+      <div class="svc-card reveal d3"><div class="sc-ico">🎓</div><span class="sc-num">08</span><p class="sc-name">Formation professionnelle</p><p class="sc-txt">Des équipes formées, une organisation qui monte en puissance. SYSCOHADA, OHADA, IFRS.</p><a href="#" class="sc-link" data-page="services">En savoir plus →</a></div>
+    </div>
+  </div>
+
+  <!-- VALEURS -->
+  <div class="valeurs">
+    <div class="reveal"><span class="s-tag">Ce qui nous distingue</span><h2 class="s-h2">Pas juste un cabinet.<br><em>Un partenaire stratégique.</em></h2></div>
+    <div class="valeurs-grid">
+      <div>
+        <div class="valeur-item reveal"><div class="v-num">01</div><div><div class="v-title">Indépendance totale</div><div class="v-text">Aucun conflit d'intérêts. Nos avis sont fondés uniquement sur les faits, les normes et les intérêts de nos clients — jamais sur des pressions extérieures.</div></div></div>
+        <div class="valeur-item reveal d1"><div class="v-num">02</div><div><div class="v-title">Rigueur méthodologique</div><div class="v-text">Chaque mission suit un protocole strict. Nos conclusions sont documentées, vérifiables et défendables devant n'importe quelle instance.</div></div></div>
+        <div class="valeur-item reveal d2"><div class="v-num">03</div><div><div class="v-title">Confidentialité absolue</div><div class="v-text">Vos données, vos stratégies et vos résultats restent strictement confidentiels. C'est une exigence déontologique que nous prenons au sérieux.</div></div></div>
+        <div class="valeur-item reveal d3"><div class="v-num">04</div><div><div class="v-title">Proximité &amp; réactivité</div><div class="v-text">Nous sommes disponibles quand vous en avez besoin. Une équipe à taille humaine, des interlocuteurs dédiés, des délais respectés.</div></div></div>
+      </div>
+      <div class="valeurs-right reveal d2">
+        <div class="val-big">Votre réussite est notre<br><em>seul objectif.</em></div>
+        <p class="val-desc">Le Cabinet Mor Dieng n'est pas une structure qui traite des dossiers à la chaîne. Chaque client est un partenaire à part entière. Nous prenons le temps de comprendre vos enjeux, votre secteur, vos contraintes — pour vous apporter des solutions qui font vraiment la différence.</p>
+        <p class="val-desc">Reconnu au niveau national et régional, notre cabinet bénéficie d'une légitimité institutionnelle rare qui renforce la crédibilité de chacune de nos interventions.</p>
+        <a href="#" class="btn-pill" data-page="about"><span>En savoir plus sur nous</span><span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band reveal">
+    <div>
+      <div class="cta-band-title">Prêt à sécuriser votre avenir<br><em>financier et juridique ?</em></div>
+      <div class="cta-band-sub">Contactez-nous pour un premier échange. Sans engagement, avec toute notre attention.</div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <a href="#" class="btn-white" data-page="contact"><span>Prendre contact</span></a>
+      <a href="#" class="btn-outline" style="color:var(--blanc-pur);border-color:rgba(255,255,255,.4)" data-page="services">Voir nos services</a>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE : À PROPOS
+═══════════════════════════════════════ -->
+<div class="page" id="page-about">
+
+  <div class="about-hero">
+    <div class="reveal">
+      <span class="s-tag">À propos du cabinet</span>
+      <h2 class="s-h2">Une expertise construite sur<br><em>des décennies d'engagement.</em></h2>
+      <p class="about-hero-text">Le Cabinet Mor Dieng est bien plus qu'un cabinet comptable. C'est une institution ancrée dans l'espace OHADA, dirigée par l'un des experts-comptables les plus reconnus du Sénégal et de l'Afrique de l'Ouest.</p>
+      <p class="about-hero-text">Depuis sa création, le Cabinet s'est imposé comme un partenaire incontournable pour les entreprises, les institutions publiques et les investisseurs qui cherchent un accompagnement de haut niveau, alliant maîtrise technique, indépendance et vision stratégique.</p>
+      <a href="#" class="btn-white" data-page="contact"><span>Nous rencontrer</span><span class="arr">→</span></a>
+    </div>
+    <div class="about-hero-right reveal d2">
+      <div class="portrait-frame">
+        <span class="pf-mono">MD</span>
+        <div class="pf-name">Mor Dieng</div>
+        <div class="pf-div"></div>
+        <div class="pf-role">Expert-Comptable Agréé · Président ONECCA · Président ABWA</div>
+      </div>
+      <div class="pf-badge"><span class="pb-n">ONECCA</span><span class="pb-l">Président · Sénégal</span></div>
+    </div>
+  </div>
+
+  <div class="about-story">
+    <div class="reveal">
+      <div class="story-label">Notre histoire</div>
+      <h3 class="story-h">Né de l'exigence,<br>construit sur <em>la confiance.</em></h3>
+      <p class="story-p">Le Cabinet Mor Dieng a été fondé avec une conviction simple : les entreprises sénégalaises et africaines méritent un accompagnement comptable, fiscal et juridique de niveau international — sans pour autant perdre en proximité et en connaissance du contexte local.</p>
+      <p class="story-p">Au fil des années, le cabinet a développé une expertise pluridisciplinaire reconnue, couvrant l'audit, la fiscalité, le droit des affaires OHADA, les restructurations et la comptabilité sectorielle (pétrolière, minière). Une expertise qui s'appuie sur des normes internationales tout en restant profondément ancrée dans les réalités de l'espace UEMOA et CEDEAO.</p>
+      <div class="story-quote">"Nous ne certifions pas seulement des comptes. Nous certifions des décisions, des projets, des ambitions."</div>
+      <p class="story-p">Aujourd'hui, le Cabinet Mor Dieng accompagne un large spectre de clients : PME locales, groupes multinationaux, institutions publiques, ONG, projets financés par les bailleurs internationaux et juridictions. Une diversité qui témoigne de notre capacité d'adaptation et de l'étendue de notre maîtrise technique.</p>
+    </div>
+    <div class="reveal d2">
+      <div class="story-label">Reconnaissances &amp; accréditations</div>
+      <div class="creds-section">
+        <div class="cred-card"><span class="cred-num">01</span><div><div class="cred-title">Président de l'ONECCA du Sénégal</div><div class="cred-sub">Ordre National des Experts-Comptables et Comptables Agréés du Sénégal — mandat renouvelé depuis juin 2022. Une responsabilité institutionnelle qui témoigne de la reconnaissance par ses pairs.</div></div></div>
+        <div class="cred-card"><span class="cred-num">02</span><div><div class="cred-title">Président de l'ABWA (2024)</div><div class="cred-sub">Association of Accountancy Bodies in West Africa — représentation panafricaine et leadership régional dans la profession comptable en Afrique de l'Ouest.</div></div></div>
+        <div class="cred-card"><span class="cred-num">03</span><div><div class="cred-title">Expert-Comptable Agréé</div><div class="cred-sub">Membre de l'Ordre National des Experts-Comptables du Sénégal. Agrément qui garantit la conformité aux exigences déontologiques et professionnelles les plus strictes.</div></div></div>
+        <div class="cred-card"><span class="cred-num">04</span><div><div class="cred-title">Maîtrise OHADA · UEMOA · CEDEAO · IFRS</div><div class="cred-sub">Parfaite connaissance des référentiels comptables, fiscaux et juridiques applicables dans l'espace ouest-africain et des standards internationaux.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-values">
+    <div class="reveal text-center"><span class="s-tag">Nos valeurs fondamentales</span><h2 class="s-h2">Ce que nous refusons de<br><em>mettre de côté.</em></h2></div>
+    <div class="av-grid">
+      <div class="av-card reveal"><div class="av-ico">🎯</div><div class="av-n">Indépendance</div><div class="av-t">Nos avis ne sont jamais influencés par des intérêts extérieurs. Nos conclusions, c'est la réalité — documentée, vérifiée, défendable.</div></div>
+      <div class="av-card reveal d1"><div class="av-ico">🔍</div><div class="av-n">Rigueur</div><div class="av-t">Chaque mission suit un protocole strict. Nous n'approximons pas. La précision est notre standard, pas notre ambition.</div></div>
+      <div class="av-card reveal d2"><div class="av-ico">🔒</div><div class="av-n">Confidentialité</div><div class="av-t">Vos informations ne quittent jamais notre cabinet. La discrétion est une exigence déontologique que nous prenons au sérieux.</div></div>
+      <div class="av-card reveal d3"><div class="av-ico">🤝</div><div class="av-n">Proximité</div><div class="av-t">Des interlocuteurs dédiés, disponibles, qui connaissent votre dossier. Pas un numéro de ticket — une relation de confiance.</div></div>
+      <div class="av-card reveal"><div class="av-ico">🌍</div><div class="av-n">Ancrage régional</div><div class="av-t">Une expertise profondément enracinée dans les réalités économiques, juridiques et culturelles de l'espace OHADA.</div></div>
+      <div class="av-card reveal d1"><div class="av-ico">📈</div><div class="av-n">Vision stratégique</div><div class="av-t">Nous ne regardons pas seulement le passé comptable. Nous anticipons, nous conseillons, nous contribuons à vos décisions futures.</div></div>
+    </div>
+  </div>
+
+  <div class="about-chiffres">
+    <div class="chiffre-item reveal"><span class="ch-n">8</span><span class="ch-l">Domaines d'expertise</span></div>
+    <div class="chiffre-item reveal d1"><span class="ch-n">×2</span><span class="ch-l">Président ONECCA</span></div>
+    <div class="chiffre-item reveal d2"><span class="ch-n">100%</span><span class="ch-l">Indépendance</span></div>
+    <div class="chiffre-item reveal d3"><span class="ch-n">ABWA</span><span class="ch-l">Président 2024</span></div>
+  </div>
+
+</div><!-- /page-about -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE : SERVICES
+═══════════════════════════════════════ -->
+<div class="page" id="page-services">
+
+  <div class="services-hero">
+    <span class="s-tag">Nos services</span>
+    <h2 class="s-h2">Huit expertises.<br><em>Une seule exigence : votre réussite.</em></h2>
+    <p class="services-hero-sub">Chaque service est conçu pour répondre à un besoin précis — avec la même rigueur, la même indépendance et la même ambition de résultat. Sélectionnez un service pour en savoir plus.</p>
+  </div>
+
+  <div class="svc-layout">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="svc-sidebar">
+      <div class="svc-sidebar-title">Nos services</div>
+      <button class="svc-nav-btn active" data-svc="s1"><div class="snb-ico">📊</div><div class="snb-text"><span class="snb-num">01</span><span class="snb-name">Audit & Commissariat aux comptes</span></div></button>
+      <button class="svc-nav-btn" data-svc="s2"><div class="snb-ico">📒</div><div class="snb-text"><span class="snb-num">02</span><span class="snb-name">Expertise comptable</span></div></button>
+      <button class="svc-nav-btn" data-svc="s3"><div class="snb-ico">⚖️</div><div class="snb-text"><span class="snb-num">03</span><span class="snb-name">Conseil juridique & fiscal</span></div></button>
+      <button class="svc-nav-btn" data-svc="s4"><div class="snb-ico">🏛</div><div class="snb-text"><span class="snb-num">04</span><span class="snb-name">Expertise judiciaire</span></div></button>
+      <button class="svc-nav-btn" data-svc="s5"><div class="snb-ico">🎯</div><div class="snb-text"><span class="snb-num">05</span><span class="snb-name">Stratégie & gouvernance</span></div></button>
+      <button class="svc-nav-btn" data-svc="s6"><div class="snb-ico">🔀</div><div class="snb-text"><span class="snb-num">06</span><span class="snb-name">Fusions & acquisitions</span></div></button>
+      <button class="svc-nav-btn" data-svc="s7"><div class="snb-ico">⛏️</div><div class="snb-text"><span class="snb-num">07</span><span class="snb-name">Comptabilité pétrolière & minière</span></div></button>
+      <button class="svc-nav-btn" data-svc="s8"><div class="snb-ico">🎓</div><div class="snb-text"><span class="snb-num">08</span><span class="snb-name">Formation professionnelle</span></div></button>
+    </aside>
+
+    <!-- CONTENU -->
+    <div class="svc-content">
+
+      <!-- 01 -->
+      <div class="svc-panel active" id="s1">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 01</div>
+            <h2 class="sp-h">Audit &amp; Commissariat<br><em>aux comptes</em></h2>
+          </div>
+          <div class="sp-ico-big">📊</div>
+        </div>
+        <div class="sp-hook">Vos états financiers sont le miroir de votre santé économique. Encore faut-il que ce miroir soit fidèle — et que ceux qui vous lisent lui fassent confiance.</div>
+        <p class="sp-body">Le Cabinet Mor Dieng réalise des missions d'audit légal (commissariat aux comptes) et contractuel dans le respect des normes ISA et du droit OHADA. Nous certifions la régularité, la sincérité et la fidélité de vos comptes, en toute indépendance. Une certification qui protège votre crédibilité auprès de vos partenaires, investisseurs et autorités de régulation.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Audit légal et commissariat aux comptes</li>
+          <li>Audit contractuel et d'établissements</li>
+          <li>Audit des projets financés par les bailleurs</li>
+          <li>Audit de conformité (SYSCOHADA, IFRS)</li>
+          <li>Revue limitée et procédures convenues</li>
+          <li>Certification des états consolidés</li>
+          <li>Rapport spécial sur les conventions réglementées</li>
+          <li>Rapport de gestion et rapport du CAC</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Notre indépendance totale et notre légitimité institutionnelle (ONECCA, ABWA) font de nos certifications une garantie reconnue par les banques, les investisseurs et les juridictions. Nous ne certifions pas des chiffres — nous certifions votre crédibilité.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Demander un audit</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 02 -->
+      <div class="svc-panel" id="s2">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 02</div>
+            <h2 class="sp-h">Expertise<br><em>comptable</em></h2>
+          </div>
+          <div class="sp-ico-big">📒</div>
+        </div>
+        <div class="sp-hook">Une comptabilité bien tenue, c'est bien plus qu'une obligation légale : c'est le socle de toutes vos décisions stratégiques et financières.</div>
+        <p class="sp-body">Nous prenons en charge la tenue et la révision de votre comptabilité, la production de vos états financiers et la préparation de vos clôtures annuelles. Une équipe expérimentée et rigoureuse qui anticipe les écueils avant qu'ils ne deviennent des problèmes — et qui vous libère du temps pour vous concentrer sur votre activité.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Tenue comptable SYSCOHADA révisé</li>
+          <li>Révision et supervision comptable</li>
+          <li>Établissement des états financiers annuels</li>
+          <li>Consolidation des comptes de groupes</li>
+          <li>Accompagnement à la clôture d'exercice</li>
+          <li>Externalisation de la fonction comptable</li>
+          <li>Production des balances et journaux</li>
+          <li>Préparation des déclarations fiscales</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Nous ne sommes pas un prestataire qui traite vos documents à distance. Nos équipes s'impliquent dans votre réalité opérationnelle pour produire une comptabilité qui reflète fidèlement votre activité — et qui anticipe vos prochaines étapes.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Nous confier votre comptabilité</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 03 -->
+      <div class="svc-panel" id="s3">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 03</div>
+            <h2 class="sp-h">Conseil juridique<br><em>&amp; fiscal</em></h2>
+          </div>
+          <div class="sp-ico-big">⚖️</div>
+        </div>
+        <div class="sp-hook">Payez ce que vous devez. Pas un franc de plus. La frontière entre optimisation fiscale légitime et risque de redressement est ténue — nous la connaissons précisément.</div>
+        <p class="sp-body">Nous structurons vos opérations pour en maximiser l'efficacité fiscale dans le strict respect des lois en vigueur. Du choix de la forme juridique à la gestion des contrôles fiscaux, nous sécurisons chaque étape de votre développement. Notre double maîtrise du droit OHADA et de la fiscalité sénégalaise est un avantage décisif pour nos clients.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Optimisation et planification fiscale</li>
+          <li>Structuration juridique des sociétés</li>
+          <li>Assistance lors des contrôles fiscaux</li>
+          <li>Gestion des contentieux fiscaux</li>
+          <li>Conseil en droit des affaires OHADA</li>
+          <li>Rédaction et analyse de contrats</li>
+          <li>Régimes fiscaux d'investissement (Code des investissements)</li>
+          <li>Conseil en TVA, IS, droits d'enregistrement</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Notre expertise combine droit OHADA, fiscalité sénégalaise et connaissance des pratiques de l'administration. Un avantage rare qui nous permet de défendre vos intérêts avec les bons arguments, dans les bons délais.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Sécuriser votre situation</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 04 -->
+      <div class="svc-panel" id="s4">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 04</div>
+            <h2 class="sp-h">Expertise<br><em>judiciaire</em></h2>
+          </div>
+          <div class="sp-ico-big">🏛</div>
+        </div>
+        <div class="sp-hook">Dans un litige, la qualité de l'expertise financière peut tout changer. Quand les chiffres deviennent des preuves, il faut un expert dont l'analyse est incontestable.</div>
+        <p class="sp-body">Le Cabinet Mor Dieng intervient comme expert judiciaire auprès des Cours et Tribunaux. Nous évaluons les préjudices financiers, analysons les situations comptables litigieuses et produisons des rapports d'expertise fondés sur des méthodes éprouvées — recevables et incontestables devant n'importe quelle juridiction.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Expertise judiciaire ordonnée par les juridictions</li>
+          <li>Évaluation de préjudices financiers</li>
+          <li>Analyse des situations comptables en litige</li>
+          <li>Arbitrage commercial et médiation</li>
+          <li>Expertise amiable contradictoire</li>
+          <li>Évaluation de fonds de commerce</li>
+          <li>Analyse des détournements et fraudes</li>
+          <li>Rapports d'expertise recevables en justice</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Notre indépendance est reconnue par les juridictions. Nos rapports sont construits sur des méthodes transparentes et documentées, qui résistent à l'examen le plus rigoureux. Une crédibilité qui pèse lourd dans la balance.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Consulter un expert judiciaire</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 05 -->
+      <div class="svc-panel" id="s5">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 05</div>
+            <h2 class="sp-h">Stratégie<br><em>&amp; gouvernance</em></h2>
+          </div>
+          <div class="sp-ico-big">🎯</div>
+        </div>
+        <div class="sp-hook">Piloter avec lucidité, décider avec autorité. Une organisation qui performe est une organisation qui se connaît : ses forces, ses failles, ses leviers de valeur.</div>
+        <p class="sp-body">Nous accompagnons les dirigeants, les institutions et les pouvoirs publics dans l'évaluation de leurs politiques, le renforcement de leur gouvernance et l'optimisation de leurs performances. Du diagnostic stratégique à la mise en place des dispositifs de contrôle, nous intervenons à chaque niveau de l'organisation.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Évaluation des politiques publiques</li>
+          <li>Audit des programmes de développement</li>
+          <li>Mise en place du contrôle interne</li>
+          <li>Gouvernance des conseils d'administration</li>
+          <li>Diagnostic organisationnel et performance</li>
+          <li>Accompagnement des dirigeants</li>
+          <li>Cartographie des risques</li>
+          <li>Tableaux de bord et indicateurs de pilotage</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Notre expérience auprès des institutions publiques, des entreprises privées et des bailleurs internationaux nous donne une vision à 360° des enjeux de gouvernance dans l'espace OHADA. Nous ne proposons pas des modèles génériques — nous construisons des solutions adaptées à votre réalité.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Renforcer votre gouvernance</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 06 -->
+      <div class="svc-panel" id="s6">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 06</div>
+            <h2 class="sp-h">Fusions, acquisitions<br><em>&amp; restructuration</em></h2>
+          </div>
+          <div class="sp-ico-big">🔀</div>
+        </div>
+        <div class="sp-hook">Croître, fusionner, se transformer — sans mauvaises surprises. Une acquisition mal préparée coûte bien plus que son prix. Nous sécurisons les moments qui comptent.</div>
+        <p class="sp-body">Le Cabinet intervient à chaque phase des opérations de haut de bilan : de l'évaluation initiale à la mise en œuvre opérationnelle. Notre approche combine rigueur financière, expertise fiscale et connaissance approfondie du droit OHADA — pour des transactions sécurisées, structurées et optimisées.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Due diligence financière et comptable</li>
+          <li>Due diligence fiscale et juridique</li>
+          <li>Évaluation d'entreprises (toutes méthodes)</li>
+          <li>Structuration fiscale des opérations</li>
+          <li>Négociation et closing des transactions</li>
+          <li>Accompagnement post-acquisition</li>
+          <li>Redressement des entreprises en difficulté</li>
+          <li>Liquidation amiable et judiciaire</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Dans l'espace OHADA, les opérations de M&A ont leurs spécificités juridiques et fiscales propres. Notre maîtrise de ces particularités locales, combinée à notre expérience des standards internationaux de due diligence, est un avantage concret pour nos clients acquéreurs comme cédants.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Préparer votre opération</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 07 -->
+      <div class="svc-panel" id="s7">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 07</div>
+            <h2 class="sp-h">Comptabilité pétrolière<br><em>&amp; minière</em></h2>
+          </div>
+          <div class="sp-ico-big">⛏️</div>
+        </div>
+        <div class="sp-hook">Un secteur d'exception exige une expertise à la hauteur. Avec l'essor des ressources naturelles en Afrique de l'Ouest, maîtriser ces règles est devenu stratégique.</div>
+        <p class="sp-body">Le Cabinet Mor Dieng dispose d'une expertise reconnue dans les secteurs pétrolier et minier. Nous accompagnons opérateurs, partenaires et États dans la sécurisation de leurs intérêts financiers, fiscaux et contractuels — dans un secteur où les enjeux se chiffrent en milliards et où chaque erreur peut avoir des conséquences durables.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Comptabilité des contrats de partage de production (CPP)</li>
+          <li>Fiscalité pétrolière et minière</li>
+          <li>Audit des coûts pétroliers (cost oil)</li>
+          <li>Reporting IFRS 6 — industries extractives</li>
+          <li>Conseil aux États dans les négociations</li>
+          <li>Audit de conformité des conventions</li>
+          <li>Évaluation des actifs pétroliers et miniers</li>
+          <li>Formation des équipes des entreprises extractives</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Rares sont les cabinets sénégalais disposant d'une véritable expertise en comptabilité extractive. La nôtre est construite sur des missions terrain et une maîtrise des normes IFRS 6, des CPP et de la fiscalité minière — un avantage décisif dans un secteur en pleine expansion au Sénégal.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Discuter de votre projet</span><span class="arr">→</span></a>
+      </div>
+
+      <!-- 08 -->
+      <div class="svc-panel" id="s8">
+        <div class="sp-top">
+          <div>
+            <div class="sp-num">Service 08</div>
+            <h2 class="sp-h">Formation<br><em>professionnelle</em></h2>
+          </div>
+          <div class="sp-ico-big">🎓</div>
+        </div>
+        <div class="sp-hook">Des équipes formées, une organisation qui monte en puissance. Dans un environnement réglementaire en constante évolution, former n'est pas un luxe — c'est une nécessité stratégique.</div>
+        <p class="sp-body">Nous concevons et animons des programmes de formation sur mesure, adaptés aux besoins spécifiques de vos équipes et de votre secteur. Nos formateurs sont des praticiens reconnus qui s'appuient sur des cas concrets issus du terrain — pas des théories abstraites, mais des connaissances directement applicables.</p>
+        <div class="sp-subtitle">Ce que nous faisons concrètement</div>
+        <ul class="sp-ul">
+          <li>Formation SYSCOHADA révisé</li>
+          <li>Formation aux normes IFRS</li>
+          <li>Formation en fiscalité sénégalaise</li>
+          <li>Formation au droit OHADA</li>
+          <li>Formation en audit et contrôle interne</li>
+          <li>Formation en gouvernance</li>
+          <li>Séminaires pour dirigeants et CA</li>
+          <li>Programmes sur mesure pour PME</li>
+        </ul>
+        <div class="sp-why">
+          <div class="sp-why-title">Pourquoi nous choisir pour cette mission</div>
+          <div class="sp-why-text">Nos formations sont animées par des experts qui exercent au quotidien — pas des formateurs professionnels déconnectés du terrain. Chaque session est conçue pour être opérationnelle le lendemain matin. Une pédagogie par l'exemple, ancrée dans la réalité sénégalaise et ouest-africaine.</div>
+        </div>
+        <a href="#" class="sp-cta" data-page="contact"><span>Organiser une formation</span><span class="arr">→</span></a>
+      </div>
+
+    </div><!-- /svc-content -->
+  </div><!-- /svc-layout -->
+
+</div><!-- /page-services -->
+
+<!-- ═══════════════════════════════════════
+     PAGE : EXPERTISE
+═══════════════════════════════════════ -->
+<div class="page" id="page-expertise">
+
+  <div class="exp-hero">
+    <span class="s-tag">Cadre de référence</span>
+    <h2 class="s-h2">Une maîtrise complète<br><em>des référentiels régionaux.</em></h2>
+    <p class="exp-hero-sub">Notre cabinet intervient avec une parfaite connaissance des environnements juridiques, fiscaux et réglementaires de l'espace ouest-africain. Une expertise rare, construite sur des années de pratique terrain et d'engagement institutionnel.</p>
+  </div>
+
+  <div class="exp-cadres">
+    <div class="reveal"><span class="s-tag">Les 4 référentiels clés</span><h2 class="s-h2">Ce que nous maîtrisons,<br><em>et pourquoi ça compte.</em></h2></div>
+    <div class="exp-cadres-grid">
+      <div class="exp-cadre-card reveal">
+        <div class="ec-header"><div><div class="ec-tag-pill">Droit des affaires</div><div class="ec-h">OHADA</div></div></div>
+        <div class="ec-body">
+          <p class="ec-desc">L'Organisation pour l'Harmonisation en Afrique du Droit des Affaires unifie le droit commercial dans 17 États membres. Maîtriser l'OHADA, c'est comprendre les règles du jeu économique en Afrique — les Actes Uniformes, le SYSCOHADA, le droit des sociétés.</p>
+          <ul class="ec-points">
+            <li>Actes Uniformes OHADA (sociétés, sûretés, recouvrement, faillite)</li>
+            <li>Système Comptable OHADA (SYSCOHADA révisé)</li>
+            <li>Droit unifié des sociétés commerciales et GIE</li>
+            <li>Procédures collectives et règlement préventif</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-cadre-card reveal d1">
+        <div class="ec-header"><div><div class="ec-tag-pill">Fiscalité régionale</div><div class="ec-h">UEMOA</div></div></div>
+        <div class="ec-body">
+          <p class="ec-desc">L'Union Économique et Monétaire Ouest Africaine harmonise les politiques fiscales et douanières de ses 8 États membres. Une connaissance approfondie de ses directives est indispensable pour tout acteur opérant dans la zone franc.</p>
+          <ul class="ec-points">
+            <li>Directives fiscales UEMOA (TVA, IS, droits d'accise)</li>
+            <li>Tarif Extérieur Commun (TEC) et politique douanière</li>
+            <li>Surveillance multilatérale et critères de convergence</li>
+            <li>Réformes budgétaires et finances publiques</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-cadre-card reveal">
+        <div class="ec-header"><div><div class="ec-tag-pill">Intégration régionale</div><div class="ec-h">CEDEAO</div></div></div>
+        <div class="ec-body">
+          <p class="ec-desc">La Communauté Économique des États de l'Afrique de l'Ouest regroupe 15 pays représentant plus de 400 millions d'habitants. Un marché unique en construction, avec des enjeux commerciaux, douaniers et d'investissement considérables.</p>
+          <ul class="ec-points">
+            <li>Protocoles commerciaux et libre circulation des biens</li>
+            <li>Schéma de libéralisation des échanges CEDEAO</li>
+            <li>Investissements transfrontaliers et établissements</li>
+            <li>Convergence réglementaire et harmonisation sectorielle</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-cadre-card reveal d1">
+        <div class="ec-header"><div><div class="ec-tag-pill">Standards internationaux</div><div class="ec-h">IFRS</div></div></div>
+        <div class="ec-body">
+          <p class="ec-desc">Les International Financial Reporting Standards s'imposent pour les groupes cotés, les filiales de multinationales et les entreprises accédant aux marchés de capitaux internationaux. Nous les appliquons avec la même rigueur qu'un Big Four.</p>
+          <ul class="ec-points">
+            <li>Transition SYSCOHADA vers IFRS</li>
+            <li>IFRS 6 (industries extractives), IFRS 9, IFRS 16, IFRS 17</li>
+            <li>Consolidation et états financiers combinés</li>
+            <li>Reporting pour bailleurs et investisseurs internationaux</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-domaines">
+    <div class="reveal"><span class="s-tag">Secteurs d'intervention</span><h2 class="s-h2">Nous intervenons dans<br><em>tous les secteurs stratégiques.</em></h2></div>
+    <div class="exp-dom-grid">
+      <div class="exp-dom-card reveal"><div class="ed-ico">🏦</div><div class="ed-n">Secteur bancaire &amp; financier</div><div class="ed-t">Audit, conformité BCEAO, gestion des risques, reporting prudentiel et accompagnement des institutions de microfinance.</div></div>
+      <div class="exp-dom-card reveal d1"><div class="ed-ico">⛏️</div><div class="ed-n">Industries extractives</div><div class="ed-t">Comptabilité pétrolière et minière, CPP, fiscalité extractive, audit de coûts, conseil aux États dans les négociations.</div></div>
+      <div class="exp-dom-card reveal d2"><div class="ed-ico">🏛</div><div class="ed-n">Secteur public &amp; institutionnel</div><div class="ed-t">Audit des entités publiques, évaluation des politiques, finances locales, reporting bailleurs et gouvernance des établissements publics.</div></div>
+      <div class="exp-dom-card reveal"><div class="ed-ico">🌱</div><div class="ed-n">Projets de développement</div><div class="ed-t">Audit des ONG, projets financés par la Banque Mondiale, l'AFD, le PNUD — conformité aux exigences des donateurs internationaux.</div></div>
+      <div class="exp-dom-card reveal d1"><div class="ed-ico">🏢</div><div class="ed-n">PME &amp; ETI locales</div><div class="ed-t">Accompagnement sur mesure des entreprises sénégalaises : structuration, financement, conformité, croissance et transmission.</div></div>
+      <div class="exp-dom-card reveal d2"><div class="ed-ico">🌐</div><div class="ed-n">Groupes internationaux</div><div class="ed-t">Implantation au Sénégal, due diligence, conformité fiscale, reporting IFRS et accompagnement des filiales d'entreprises étrangères.</div></div>
+    </div>
+  </div>
+
+  <div class="exp-why">
+    <div class="reveal">
+      <span class="s-tag">Pourquoi nous choisir</span>
+      <h2 class="s-h2">Ce que nos clients<br><em>ne trouvent nulle part ailleurs.</em></h2>
+      <p class="exp-why-text">Notre positionnement est unique : la rigueur technique d'un cabinet international, la connaissance du terrain d'un acteur local, et la légitimité institutionnelle d'un leader reconnu par ses pairs.</p>
+      <p class="exp-why-text">Ce n'est pas un argument marketing. C'est le fruit de décennies d'engagement, de formations continues et de missions conduites avec la même exigence du premier au dernier jour.</p>
+    </div>
+    <div class="why-list reveal d2">
+      <div class="why-item"><div class="wi-ico">🎖️</div><div><div class="wi-n">Légitimité institutionnelle</div><div class="wi-t">Président ONECCA et ABWA — une reconnaissance par les pairs qui renforce la crédibilité de chaque intervention.</div></div></div>
+      <div class="why-item"><div class="wi-ico">📐</div><div><div class="wi-n">Double expertise locale &amp; internationale</div><div class="wi-t">SYSCOHADA, IFRS, OHADA, UEMOA — maîtrise complète des deux univers, sans jamais sacrifier l'un pour l'autre.</div></div></div>
+      <div class="why-item"><div class="wi-ico">⚡</div><div><div class="wi-n">Réactivité et engagement</div><div class="wi-t">Vos délais sont nos délais. Une équipe dédiée, des réponses rapides, des livrables dans les temps convenus.</div></div></div>
+      <div class="why-item"><div class="wi-ico">🔐</div><div><div class="wi-n">Indépendance &amp; confidentialité absolues</div><div class="wi-t">Aucun conflit d'intérêts. Vos données restent chez nous. Notre seule loyauté va à nos clients et aux normes professionnelles.</div></div></div>
+    </div>
+  </div>
+
+</div><!-- /page-expertise -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE : CLIENTS
+═══════════════════════════════════════ -->
+<div class="page" id="page-clients">
+
+  <div class="clients-hero">
+    <span class="s-tag">Nos clients</span>
+    <h2 class="s-h2">Nous accompagnons tous<br><em>les acteurs de l'économie.</em></h2>
+    <p class="clients-hero-sub">Du dirigeant de PME à la direction d'une institution internationale, en passant par les magistrats et les pouvoirs publics — notre cabinet s'adapte à chaque profil, chaque enjeu, chaque niveau d'exigence.</p>
+  </div>
+
+  <div class="clients-qui">
+    <div class="reveal"><span class="s-tag">Qui nous accompagnons</span><h2 class="s-h2">Nos clients, <em>en détail.</em></h2></div>
+    <div class="clients-grid-big">
+      <div class="cg-card reveal"><div class="cg-ico">🏛</div><div><div class="cg-n">L'État et ses démembrements</div><div class="cg-t">Audit des ministères, établissements publics et agences gouvernementales. Évaluation des politiques publiques, certification des comptes de l'État et accompagnement des réformes budgétaires.</div></div></div>
+      <div class="cg-card reveal d1"><div class="cg-ico">🌍</div><div><div class="cg-n">Collectivités territoriales</div><div class="cg-t">Communes, départements et régions — nous les accompagnons dans la tenue de leurs comptes, la conformité budgétaire, la gestion des financements locaux et les audits de performance.</div></div></div>
+      <div class="cg-card reveal"><div class="cg-ico">🏢</div><div><div class="cg-n">Entreprises publiques &amp; privées</div><div class="cg-t">PME, ETI, grandes entreprises — audit légal, expertise comptable, conseil fiscal et juridique. Nous accompagnons leur croissance à chaque étape, de la création à la transmission.</div></div></div>
+      <div class="cg-card reveal d1"><div class="cg-ico">🏦</div><div><div class="cg-n">Institutions financières &amp; bailleurs</div><div class="cg-t">Banques, établissements de microfinance, fonds d'investissement et bailleurs internationaux (Banque Mondiale, AFD, PNUD) — audit de conformité, reporting et certification des comptes.</div></div></div>
+      <div class="cg-card reveal"><div class="cg-ico">📈</div><div><div class="cg-n">Investisseurs nationaux &amp; étrangers</div><div class="cg-t">Due diligence avant investissement, structuration fiscale et juridique, évaluation d'entreprises cibles, accompagnement post-acquisition. Nous sécurisons chaque étape de votre investissement.</div></div></div>
+      <div class="cg-card reveal d1"><div class="cg-ico">🌱</div><div><div class="cg-n">Projets de développement &amp; ONG</div><div class="cg-t">Audit des projets financés par les bailleurs, conformité aux procédures des donateurs, production des rapports financiers. Nous maîtrisons les exigences spécifiques du secteur associatif et du développement.</div></div></div>
+      <div class="cg-card reveal"><div class="cg-ico">⚖️</div><div><div class="cg-n">Cours et Tribunaux</div><div class="cg-t">Expertise judiciaire ordonnée par les juridictions, évaluation de préjudices financiers, rapports d'expertise recevables. Une intervention indépendante et impartiale au service de la justice.</div></div></div>
+      <div class="cg-card reveal d1"><div class="cg-ico">🌐</div><div><div class="cg-n">Groupes internationaux</div><div class="cg-t">Filiales et bureaux de représentation au Sénégal et dans l'espace OHADA — implantation, structuration, conformité fiscale locale, reporting IFRS pour la maison mère.</div></div></div>
+    </div>
+  </div>
+
+  <div class="clients-temoignage">
+    <div class="ct-quote">"Travailler avec le Cabinet Mor Dieng, c'est avoir l'assurance que chaque chiffre est juste, chaque conseil est fondé, et chaque délai est respecté. Une rigueur rare dans notre environnement."</div>
+    <div class="ct-author">Un client du secteur bancaire · Dakar, Sénégal</div>
+  </div>
+
+  <div class="clients-engagement">
+    <div class="reveal"><span class="s-tag">Nos engagements envers vous</span><h2 class="s-h2">Ce que vous pouvez<br><em>toujours attendre de nous.</em></h2></div>
+    <div class="ce-grid">
+      <div class="ce-card reveal"><div class="ce-num">01</div><div class="ce-n">Un interlocuteur dédié</div><div class="ce-t">Pas de turnover de consultants, pas de junior qui reprend votre dossier. Un expert référent qui connaît votre situation de A à Z, disponible et réactif.</div></div>
+      <div class="ce-card reveal d1"><div class="ce-num">02</div><div class="ce-n">Des délais respectés</div><div class="ce-t">Nous nous engageons sur des dates et nous les tenons. Vos clôtures, vos audits, vos rapports — livrés dans les temps, sans rappel de votre part.</div></div>
+      <div class="ce-card reveal d2"><div class="ce-num">03</div><div class="ce-n">Une transparence totale</div><div class="ce-t">Nos honoraires sont clairs dès le départ. Pas de surprises en fin de mission. Pas de frais cachés. Une relation fondée sur la confiance et l'honnêteté.</div></div>
+      <div class="ce-card reveal"><div class="ce-num">04</div><div class="ce-n">Une confidentialité absolue</div><div class="ce-t">Vos données, vos résultats et vos stratégies restent strictement confidentiels. C'est une obligation déontologique que nous considérons comme un honneur.</div></div>
+      <div class="ce-card reveal d1"><div class="ce-num">05</div><div class="ce-n">Des conseils proactifs</div><div class="ce-t">Nous ne répondons pas seulement à vos questions — nous anticipons les risques et les opportunités. Un partenaire qui pense à l'avenir avec vous.</div></div>
+      <div class="ce-card reveal d2"><div class="ce-num">06</div><div class="ce-n">Une qualité sans exception</div><div class="ce-t">Chaque livrable, quelle que soit sa taille, passe par notre protocole de révision interne. La qualité n'est pas optionnelle chez nous — elle est systémique.</div></div>
+    </div>
+  </div>
+
+</div><!-- /page-clients -->
+
+
+<!-- ═══════════════════════════════════════
+     PAGE : CONTACT
+═══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="contact-hero">
+    <div class="reveal">
+      <span class="s-tag">Nous contacter</span>
+      <h2 class="s-h2">Parlons de<br><em>votre projet.</em></h2>
+      <p class="contact-hero-sub">Vous avez une question, un besoin d'expertise ou simplement envie d'explorer comment nous pouvons vous accompagner ? Nous sommes à votre écoute. Sans engagement, avec toute notre attention.</p>
+      <div class="contact-infos">
+        <div class="ci-row"><div class="ci-ico">📍</div><div><div class="ci-lbl">Adresse</div><div class="ci-val">Dakar, Sénégal<br>Espace OHADA · Afrique de l'Ouest</div></div></div>
+        <div class="ci-row"><div class="ci-ico">📞</div><div><div class="ci-lbl">Téléphone</div><div class="ci-val">+221 XX XXX XX XX</div></div></div>
+        <div class="ci-row"><div class="ci-ico">✉️</div><div><div class="ci-lbl">E-mail</div><div class="ci-val">contact@cabinetmordieng.sn</div></div></div>
+        <div class="ci-row"><div class="ci-ico">🕐</div><div><div class="ci-lbl">Horaires</div><div class="ci-val">Lundi – Vendredi : 8h – 18h<br>Samedi : 9h – 13h</div></div></div>
+      </div>
+    </div>
+    <div class="contact-form-wrap reveal d2">
+      <div class="cf-title">Envoyez-nous un message</div>
+      <div class="cf-row">
+        <div><label class="cf-label">Prénom</label><input type="text" class="cf-input" placeholder="Votre prénom"></div>
+        <div><label class="cf-label">Nom</label><input type="text" class="cf-input" placeholder="Votre nom"></div>
+      </div>
+      <div class="cf-group"><label class="cf-label">Adresse e-mail</label><input type="email" class="cf-input" placeholder="vous@exemple.com"></div>
+      <div class="cf-group"><label class="cf-label">Organisation</label><input type="text" class="cf-input" placeholder="Votre entreprise ou institution"></div>
+      <div class="cf-group">
+        <label class="cf-label">Type de service</label>
+        <select class="cf-select">
+          <option value="" disabled selected>Sélectionnez un service</option>
+          <option>Audit & Commissariat aux comptes</option>
+          <option>Expertise comptable</option>
+          <option>Conseil juridique & fiscal</option>
+          <option>Expertise judiciaire</option>
+          <option>Stratégie & gouvernance</option>
+          <option>Fusions & acquisitions</option>
+          <option>Comptabilité pétrolière & minière</option>
+          <option>Formation professionnelle</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="cf-group"><label class="cf-label">Votre message</label><textarea class="cf-textarea" placeholder="Décrivez votre besoin ou votre question..."></textarea></div>
+      <button class="btn-send-full" id="sendBtn"><span>Envoyer le message</span><span class="send-arr">→</span></button>
+    </div>
+  </div>
+
+  <div class="contact-map">
+    <div class="reveal"><span class="s-tag">Nous trouver</span><h2 class="s-h2">Notre cabinet,<br><em>à Dakar.</em></h2></div>
+    <div class="map-placeholder reveal d1">
+      <div class="mp-ico">📍</div>
+      <div class="mp-t">Cabinet Mor Dieng · Dakar, Sénégal</div>
+      <div class="mp-s">Intégrez votre adresse précise pour afficher la carte Google Maps</div>
+    </div>
+  </div>
+
+  <div class="contact-faq">
+    <div class="reveal"><span class="s-tag">Questions fréquentes</span><h2 class="s-h2">Tout ce que vous voulez<br><em>savoir avant de nous contacter.</em></h2></div>
+    <div class="faq-list reveal d1">
+      <div class="faq-item">
+        <button class="faq-q">Comment se déroule une première mission avec le Cabinet Mor Dieng ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Tout commence par un premier échange — en personne ou par téléphone — pour comprendre votre situation, vos besoins et vos attentes. Nous vous proposons ensuite une lettre de mission détaillée avec le périmètre, les délais et les honoraires. Une fois validée, nous constituons l'équipe dédiée et démarrons dans les meilleurs délais.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Intervenez-vous en dehors du Sénégal ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Oui. Notre expertise couvre l'ensemble de l'espace OHADA (17 pays) et nous intervenons régulièrement dans les pays de l'UEMOA et de la CEDEAO. Notre maîtrise des référentiels régionaux nous permet d'accompagner des clients dans toute l'Afrique de l'Ouest francophone.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Travaillez-vous avec des PME ou seulement de grandes structures ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Nous accompagnons toutes les tailles d'organisation — des PME locales aux grandes entreprises, en passant par les institutions publiques et les ONG. Chaque client bénéficie du même niveau d'exigence et d'attention, quelle que soit la taille de sa structure ou de sa mission.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Comment garantissez-vous la confidentialité de mes informations ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">La confidentialité est une obligation déontologique fondamentale de notre profession. Chaque membre de notre équipe est soumis au secret professionnel. Nous n'utilisons jamais les informations d'un client à d'autres fins que la mission confiée, et nous ne les communiquons à aucun tiers sans votre accord explicite.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Proposez-vous des honoraires fixes ou au temps passé ?<span class="faq-ico">+</span></button>
+        <div class="faq-a">Les deux formats sont possibles selon la nature de la mission. Pour les missions récurrentes (tenue comptable, commissariat aux comptes), nous proposons généralement des forfaits clairs définis en début d'engagement. Pour les missions ponctuelles ou complexes (due diligence, restructuration), les honoraires peuvent être calculés au temps passé. Dans tous les cas, les modalités sont précisées dans la lettre de mission avant le démarrage.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-contact -->
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="ft-brand">
+      <div class="fn">Cabinet Mor Dieng</div>
+      <div class="fs">Audit · Expertise comptable<br>Conseil juridique &amp; fiscal · Formation<br>Dakar, Sénégal · Espace OHADA</div>
+    </div>
+    <div class="ft-nav">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a href="#" data-page="home">Accueil</a></li>
+        <li><a href="#" data-page="about">À propos</a></li>
+        <li><a href="#" data-page="services">Services</a></li>
+        <li><a href="#" data-page="expertise">Expertise</a></li>
+        <li><a href="#" data-page="clients">Clients</a></li>
+        <li><a href="#" data-page="contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="ft-contact">
+      <h5>Nous contacter</h5>
+      <p>Dakar, Sénégal<br>+221 XX XXX XX XX<br>contact@cabinetmordieng.sn<br><br>Lun–Ven : 8h–18h<br>Sam : 9h–13h</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="fb-copy">© 2025 Cabinet Mor Dieng — Tous droits réservés</div>
+    <div class="fb-links">
+      <a href="#" data-page="about">À propos</a>
+      <a href="#" data-page="services">Services</a>
+      <a href="#" data-page="contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── CURSEUR ───
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=(rx-18)+'px';ring.style.top=(ry-18)+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button,.svc-card,.cg-card,.av-card,.cc,.exp-dom-card,.ce-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2.5)';ring.style.width='56px';ring.style.height='56px';ring.style.opacity='.3'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='.5'});
+});
+
+// ─── NAVIGATION ───
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelector('.nav-links a[data-page="'+page+'"]')?.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  // re-trigger reveals
+  setTimeout(()=>{
+    document.querySelectorAll('#page-'+page+' .reveal').forEach(el=>{
+      el.classList.remove('in');
+      obs.observe(el);
+    });
+  },50);
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-page]');
+  if(a){e.preventDefault();goTo(a.dataset.page)}
+});
+
+// ─── SERVICES SIDEBAR ───
+document.querySelectorAll('.svc-nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.svc;
+    document.querySelectorAll('.svc-nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.svc-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(target).classList.add('active');
+    document.querySelector('.svc-content').scrollTop = 0;
+  });
+});
+
+// ─── SCROLL REVEAL ───
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ─── FAQ ───
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.parentElement;
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen)item.classList.add('open');
+  });
+});
+
+// ─── FORM ───
+document.getElementById('sendBtn').addEventListener('click',function(){
+  this.innerHTML='<span>✓ Message envoyé avec succès</span>';
+  this.style.background='#1A5CB8';
+  setTimeout(()=>{this.innerHTML='<span>Envoyer le message</span><span class="send-arr">→</span>';this.style.background=''},3500);
+});
+</script>
+</body>
+</html>
